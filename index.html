@@ -15,24 +15,227 @@ body {
     margin: 0;
     overflow-x: hidden;
 }
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
 
+    background: radial-gradient(
+        circle,
+        transparent 60%,
+        rgba(0,0,0,0.8) 100%
+    );
+
+    z-index: 999;
+}
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: url('https://grainy-gradients.vercel.app/noise.svg');
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 998;
+}
+.fog {
+    position: fixed;
+    bottom: -100px;
+    width: 200%;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255,255,255,0.05), transparent);
+    animation: fogMove 60s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes fogMove {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
 /* ===== HEADER CINEMATIC ===== */
 header {
-    background: linear-gradient(180deg, #000000, #1a0000);
+    position: relative;
+    padding: 80px 20px;
     text-align: center;
-    padding: 60px 20px;
+    overflow: hidden;
+
+    /* 🔥 BACKGROUND DEPTH */
+    background:
+        radial-gradient(circle at center, rgba(255,0,0,0.15), transparent 70%),
+        linear-gradient(180deg, #000000, #1a0000);
+
+}
+
+/* 🖤 DARK OVERLAY */
+header::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 1;
+}
+
+/* 🔴 GLOW TITLE */
+header h1 {
+    position: relative;
+    z-index: 2;
+
+    font-family: 'UnifrakturCook', cursive;
+    font-size: 3em;
+    color: #ff1a1a;
+
+    animation: glow 2s infinite alternate;
+}
+
+/* ✨ SUBTITLE */
+header p {
+    position: relative;
+    z-index: 2;
+
+    font-size: 1em;
+    color: #aaa;
+    letter-spacing: 1px;
+    margin-top: 10px;
+}
+
+/* 🩸 BLOOD LINE (lebih halus) */
+header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 120px;
+    background: linear-gradient(#ff0000, transparent);
+    transform: translateX(-50%);
+    opacity: 0.6;
+}
+header h1::after {
+    content: "";
+    position: absolute;
+    inset: -10px;
+    background: radial-gradient(circle, rgba(255,0,0,0.25), transparent);
+    z-index: -1;
+    filter: blur(20px);
+}
+.header-content {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+@media (max-width: 768px) {
+
+    header {
+        padding: 60px 15px;
+    }
+
+    header h1 {
+        font-size: 2em;
+    }
+
+    .header-content {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .header-img {
+        width: 70px;
+    }
+}
+/* ===== CONTENT CARD ===== */
+.content {
+    background: rgba(10, 0, 0, 0.95);
+    margin: -60px auto 40px;
+    padding: 40px;
+    max-width: 1100px;
+    border-radius: 12px;
+    box-shadow: 0 0 25px rgba(255,0,0,0.3);
+    /* 🌫️ GLASS EFFECT */
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    /* 🧊 BORDER SOFT */
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+
+    /* 🌑 DEPTH SHADOW */
+    box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(0, 210, 190, 0.15);
+
     position: relative;
     overflow: hidden;
 }
 
-/* 🔴 GLOW ANIMATION */
-header h1 {
-    font-family: 'UnifrakturCook', cursive;
-    font-size: 3em;
-    color: #ff1a1a;
-    animation: glow 2s infinite alternate;
+/* ✨ SUBTLE LIGHT EFFECT */
+.content::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.08),
+        transparent
+    );
+    opacity: 0.4;
+    pointer-events: none;
 }
 
+/* 🟢 SOFT GLOW EDGE */
+.content::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    box-shadow: 0 0 40px rgba(0, 210, 190, 0.15);
+    pointer-events: none;
+}
+/* TEXT TENGAH */
+.header-text {
+    flex: 1;
+    text-align: center;
+}
+
+/* GAMBAR KIRI & KANAN */
+.header-img {
+    width: 120px;
+    height: auto;
+    object-fit: contain;
+    opacity: 0.9;
+}
+
+/* OPTIONAL: biar gak terlalu nempel */
+.left-img {
+    margin-right: 10px;
+}
+
+.right-img {
+    margin-left: 10px;
+}
+
+/* ===== RESPONSIVE MOBILE ===== */
+@media (max-width: 768px) {
+
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .header-img {
+        filter: brightness(0.8) contrast(1.2);
+        width: 80px; /* lebih kecil di HP */
+    }
+
+    header h1 {
+        font-size: 2em;
+    }
+}
 /* ✨ GLOW KEYFRAMES */
 @keyframes glow {
     from {
@@ -68,13 +271,13 @@ header::before {
 
 @keyframes drip {
     0% { transform: translateY(-100px); opacity: 0; }
-    50% { opacity: 1; }
-    100% { transform: translateY(400px); opacity: 0; }
+    30% { opacity: 1; }
+    100% { transform: translateY(500px); opacity: 0; }
 }
 
 /* ===== HERO CINEMATIC ===== */
 .hero {
-    background: url("dark-castle.jpg") center/cover no-repeat;
+    background: url("ryona1.jpeg") center/cover no-repeat;
     height: 420px;
     display: flex;
     justify-content: center;
@@ -106,7 +309,16 @@ header::before {
     border-radius: 12px;
     box-shadow: 0 0 25px rgba(255,0,0,0.3);
 }
+.section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: 1s ease;
+}
 
+.section.show {
+    opacity: 1;
+    transform: translateY(0);
+}
 /* ===== SECTION TITLE ===== */
 .section h3 {
     font-family: 'UnifrakturCook', cursive;
@@ -129,38 +341,172 @@ header::before {
     box-shadow: 0 0 15px red;
 }
 
-/* ===== GALLERY ===== */
-.gallery img {
-    border-radius: 10px;
-    border: 2px solid #8b0000;
-    filter: brightness(0.7);
-    transition: 0.3s;
+/* ===== GALLERY FIX (1x4 + SMALL + CLEAN) ===== */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 15px;
 }
 
+/* ===== PORTRAIT STYLE ===== */
+.gallery img {
+    width: 100%;
+    aspect-ratio: 3 / 4; /* 🔥 ini bikin portrait */
+    object-fit: cover;
+
+    border-radius: 10px;
+    border: 1px solid #8b0000;
+
+    filter: brightness(0.75) contrast(1.1);
+    transition: 0.3s ease;
+}
+
+/* HOVER */
 .gallery img:hover {
     filter: brightness(1);
     transform: scale(1.05);
 }
 
+@media (max-width: 768px) {
+    .gallery {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .gallery img {
+        aspect-ratio: 3 / 4;
+    }
+}
 /* ===== BUTTON MUSIC ===== */
+/* ===== MUSIC BUTTON UPGRADE ===== */
 #musicBtn {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: black;
-    color: red;
-    border: 1px solid red;
-    padding: 12px 20px;
-    border-radius: 30px;
+    bottom: 18px;
+    right: 18px;
+
+    width: 55px;
+    height: 55px;
+
+    border-radius: 50%;
+    border: 1px solid #8b0000;
+
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(6px);
+
+    color: #ff1a1a;
+    font-size: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     cursor: pointer;
-    box-shadow: 0 0 10px red;
+
+    box-shadow: 0 0 10px rgba(255,0,0,0.4);
+    transition: 0.3s ease;
+
+    z-index: 9999;
 }
 
+/* HOVER */
 #musicBtn:hover {
-    background: red;
-    color: black;
+    transform: scale(1.1);
+    box-shadow: 0 0 18px rgba(255,0,0,0.7);
 }
 
+/* ACTIVE (HP TOUCH) */
+#musicBtn:active {
+    transform: scale(0.95);
+}
+
+/* 🔊 PLAYING STATE */
+#musicBtn.playing {
+    background: rgba(80,0,0,0.8);
+    box-shadow: 0 0 25px rgba(255,0,0,0.8);
+    animation: pulse 1.5s infinite;
+}
+#musicBtn::after {
+    content: "";
+    position: absolute;
+    inset: -5px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,0,0,0.3);
+    opacity: 0;
+    transition: 0.3s;
+}
+
+#musicBtn.playing::after {
+    opacity: 1;
+    animation: ripple 2s infinite;
+}
+
+@keyframes ripple {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(1.8); opacity: 0; }
+}
+
+/* ✨ PULSE EFFECT */
+@keyframes pulse {
+    0% { box-shadow: 0 0 10px rgba(255,0,0,0.5); }
+    50% { box-shadow: 0 0 25px rgba(255,0,0,1); }
+    100% { box-shadow: 0 0 10px rgba(255,0,0,0.5); }
+}
+/* ===== VIDEO SECTION ===== */
+.video-section {
+    text-align: center;
+}
+
+/* FRAME VIDEO */
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 700px;
+    margin: 20px auto;
+
+    border-radius: 12px;
+    overflow: hidden;
+
+    box-shadow: 0 0 25px rgba(255,0,0,0.3);
+}
+
+/* ASPECT RATIO RESPONSIVE */
+.video-wrapper {
+    max-width: 700px;
+    margin: 20px auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 25px rgba(255,0,0,0.3);
+}
+
+.video-wrapper video {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: brightness(0.85) contrast(1.1);
+}
+
+/* glow subtle */
+.video-wrapper::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    box-shadow: 0 0 40px rgba(255,0,0,0.2);
+    pointer-events: none;
+}
+
+.video-caption {
+    text-align: center;
+    font-size: 0.9em;
+    color: #aaa;
+    margin-top: 10px;
+    font-style: italic;
+}
+@media (max-width: 768px) {
+    .video-wrapper {
+        margin: 15px 10px;
+    }
+}
 /* ===== FOOTER ===== */
 footer {
     text-align: center;
@@ -176,19 +522,19 @@ footer {
     <source src="The Walls.mp3" type="audio/mpeg">
 </audio>
 
-<button id="musicBtn">🔊 Play Music</button>
-
+<button id="musicBtn">▶</button>
+<div class="fog"></div>
 
     <header>
     <div class="header-content">
-        <img src="chibir.png" class="header-img left-img">
+        <img src="Marceline.png" class="header-img left-img">
         
         <div class="header-text">
             <h1>Selamat ulang tahun Ryona!</h1>
             <p>Celebrate your special day – April 30th</p>
         </div>
 
-        <img src="chibir1.png" class="header-img right-img">
+        <img src="eggward.png" class="header-img right-img">
     </div>
 </header>
     <div class="hero">
@@ -198,55 +544,65 @@ footer {
         <div class="section">
             <h3>ABD Ryona</h3>
            
-<p>Happy Birthday, Ryona
-     🎉🤍</p>
-It’s crazy to think we’ve known each other for almost 5 years now—maybe we’ve been real, truly close friends for about 2 years. And honestly, those years mean so much to me. High school wouldn’t have been the same without you and all our memories together.</p>
+<p>Happy Birthday, Ryona 🤍</p>
 
-<p>I know things haven’t been the same lately, and I’m really sorry for what happened. I truly regret it. If I could go back, I would definitely do things better. You and our friendships matter more to me than you probably think.</p>
+<p>Gak kerasa ya… kita udah kenal selama ini. Kurang lebih 3 tahunan lah, dan jujur aja, banyak banget momen yang aku inget dari semua itu.</p>
 
-<p>On your special day, I just want to wish you all the happiness, success, and good things in the world. I hope every dream you have slowly comes true, because you really deserve it.</p>
+<p>Mulai dari hal-hal kecil sampai yang random banget… tapi justru itu yang bikin semuanya berasa berarti.</p>
 
-<p>I also hope that one day, we can be close again like before—laughing, being silly, playing, and spending time together with everyone. Even if life takes us in different directions, I believe we’re both trying our best to build a great future.</p>
+<p>Di hari spesial kamu ini, aku cuma mau bilang—semoga kamu selalu bahagia, semua yang kamu usahakan pelan-pelan tercapai, dan hidup kamu ke depan jadi lebih baik dari yang kamu bayangin.</p>
 
-<p>Thank you for being part of my life and for being one of my best friends.
-I love you—not in a romantic way, but in a “you’re really important to me and I care about you a lot” kind of way.</p>
+<p>Aku juga berharap… kita masih bisa tetap deket, tetap temenan baik, walaupun nanti keadaan berubah atau kita jalan ke arah masing-masing.</p>
 
-<p>By the way… do you remember when I gave you an eraser last year? 😅 I was so confused about what gift to give you back then. Plus, I had that tiny little crush and everything was complicated. So yeah… the eraser actually meant I wanted to start over—to erase the bad things and be friends like before. Not because it was cheap, okay 😭 I just didn’t know what else to do at that time.</p>
+<p>Thanks ya, udah jadi bagian dari hidup aku selama ini. Aku beneran menghargai itu.</p>
 
-<p>And I still don’t know why you gave me perfume on my birthday… do I really smell that bad? 😂 Wow. Rude. Just kidding.</p>
+<p>Ngomong-ngomong soal hadiah… jujur aku sempet bingung 😭 tapi yaudah karena aku tau kamu suka yang gothic-gothic, jadi aku pilihin itu. Semoga kamu suka.</p>
 
-<p>This year, I was super serious about choosing something for you. I even stressed about it 😤 So I made you a birthday website, got you a George Russell hat, and a sunflower keychain. I chose sunflowers because they mean friendship and loyalty. That’s how I see you—and that’s what I hope we’ll always be.</p>
+<p>Oh iya, bebeknya… inget sesuatu gak? 👀</p>
 
-<p>I hope we can stay best friends for a long, long time, with you and everyone, through everything life throws at us.</p>
+<p>Balasan kemarin juga lucu sih—kalung taring wkwkwk.</p>
 
-<p>Happy Birthday once again, Gea 🤍</p>
-<p>Always cheering for you.</p>
-            <div class="quote">"If in doubt, go flat out." – George Russell</div>
+<p>Pokoknya, semoga kita masih bisa ketawa bareng lagi ke depannya, gak cuma sekarang tapi lama banget.</p>
+
+<p>Happy Birthday once again, Ryona 🤍</p>
+<p>Aku selalu support kamu, dari jauh ataupun deket.</p>
+
+            <div class="quote">"Jika ada yang bisa kamu lakukan hari ini, lakukan itu. Jangan tunggu hingga besok". – Marc Marques</div>
         </div>
-        <div class="section">
-            <h3>George Fun Facts</h3>
-            <div class="facts">
-                <div class="fact">
-                    <strong>Mr. Saturday:</strong> Earned this nickname for consistently overperforming in qualifying while at Williams, frequently placing his car much higher on the grid than its race pace allowed.
-                </div>
-                <div class="fact">
-                    <strong>Junior Career Success:</strong> Won the GP3 Series (2017) and FIA Formula 2 Championship (2018) in consecutive years before entering F1.
-                </div>
-                <div class="fact">
-                    <strong>Karting with Rivals:</strong> Competed against fellow F1 drivers Charles Leclerc, Alexander Albon, and Lando Norris during their karting days.
-                </div>
-                <div class="fact">
-                    <strong>Interests:</strong> Enjoys playing padel, watching MotoGP and tennis, and cites Casino Royale as his favorite film.
-                </div>
-            </div>
-        </div>
+
+
+    <div class="section video-section">
+    <h3>For You 🎞️</h3>
+
+    <div class="video-wrapper">
+        <video id="myVideo" controls>
+            <source src="ryonakayang.mp4" type="video/mp4">
+            Your browser does not support video.
+        </video>
+    </div>
+
+    <p class="video-caption">
+        I made this just for you.
+    </p>
+</div>
+
         <div class="section">
             <h3>Countdown to the Big Day</h3>
             <p id="countdown" class="countdown">Calculating...</p>
-        </div>2
+        </div>
+        <div class="section">
+            <h3>Photo Gallery</h3>
+            <div class="gallery">
+                <img src="ryona2.jpeg" alt="Ryona in action">
+                <img src="ryona3.jpg" alt="Ryona ">
+                <img src="ryona4.jpg" alt="Ryona smiling">
+                <img src="ryona1.jpeg" alt="Ryona in a helmet">
+            </div>
+
     </div>
+    
     <footer>
-        <p>Made by Mizuto and Calz/p>
+        <p>Made by Mizuto</p>
     </footer>
 
     <!-- CONFETTI LIBRARY -->
@@ -270,20 +626,19 @@ const btn = document.getElementById("musicBtn");
 
 let playing = false;
 
-btn.addEventListener("click", function(){
+btn.addEventListener("click", () => {
 
-    if(!playing){
-        music.play().catch(err=>{
-            console.log("Play blocked:", err);
-        });
-        btn.textContent="🔈 Pause Music";
-        playing=true;
-    }else{
+    if (!playing) {
+        music.play().catch(() => {});
+        btn.innerHTML = "⏸"; // pause icon
+        btn.classList.add("playing");
+    } else {
         music.pause();
-        btn.textContent="🔊 Play Music";
-        playing=false;
+        btn.innerHTML = "▶"; // play icon
+        btn.classList.remove("playing");
     }
 
+    playing = !playing;
 });
 
 
@@ -319,6 +674,66 @@ updateCountdown();
 
 });
 
+function createParticle(){
+    const p = document.createElement("div");
+    p.style.position = "fixed";
+    p.style.width = "2px";
+    p.style.height = "2px";
+    p.style.background = "rgba(255,255,255,0.2)";
+    p.style.left = Math.random()*100+"vw";
+    p.style.top = "100vh";
+    p.style.opacity = Math.random();
+
+    document.body.appendChild(p);
+
+    p.animate([
+        { transform: "translateY(0)" },
+        { transform: "translateY(-120vh)" }
+    ], {
+        duration: 8000 + Math.random()*4000,
+        easing: "linear"
+    });
+
+    setTimeout(()=>p.remove(),12000);
+}
+
+setInterval(createParticle,300);
+function typeText(element, text, speed=30){
+    let i = 0;
+    element.innerHTML = "";
+
+    function typing(){
+        if(i < text.length){
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(typing, speed);
+        }
+    }
+
+    typing();
+}
+
+const letter = document.querySelector(".section p");
+typeText(letter, letter.textContent);
+
+const sections = document.querySelectorAll(".section");
+
+window.addEventListener("scroll", () => {
+    sections.forEach(sec => {
+        const top = sec.getBoundingClientRect().top;
+        if (top < window.innerHeight - 80) {
+            sec.classList.add("show");
+        }
+    });
+});
+const video = document.getElementById("myVideo");
+
+video.addEventListener("play", () => {
+    music.pause();
+    btn.innerHTML = "▶";
+    btn.classList.remove("playing");
+    playing = false;
+});
 </script>
 
 </body>
